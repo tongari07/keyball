@@ -31,14 +31,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [1] = LAYOUT_universal(
-    _______ ,  S(KC_5)   , S(KC_3)    , S(KC_SLASH)   ,  KC_GRAVE   , S(KC_4)    ,                                         _______    , S(KC_LEFT_BRACKET)    , S(KC_RIGHT_BRACKET)    , KC(KC_GRAVE)    , S(KC_MINUS)   , _______   ,
+    _______ ,  S(KC_5)   , S(KC_3)    , S(KC_SLASH)   ,  KC_GRAVE   , S(KC_4)    ,                                         _______    , S(KC_LEFT_BRACKET)    , S(KC_RIGHT_BRACKET)    , S(KC_GRAVE)    , S(KC_MINUS)   , _______   ,
     _______ ,  S(KC_2) , S(KC_SEMICOLON)  , S(KC_1)   , KC_QUOTE   , S(KC_QUOTE)   ,                                         S(KC_6)  , S(KC_9)  , S(KC_0)    , S(KC_COMM)  , S(KC_DOT)  , _______   ,
     _______ ,  S(KC_7) , KC_SEMICOLON  , KC_BACKSLASH , S(KC_SLASH)  , S(KC_8)  ,                                         S(KC_BACKSLASH)  , KC_LEFT_BRACKET  , KC_RIGHT_BRACKET  , KC_COMM  , KC_DOT  , _______  ,
                   _______  , _______ , _______  ,         _______  , _______  ,                   _______  , _______  , _______       , _______  , _______
   ),
 
   [2] = LAYOUT_universal(
-    _______  ,S(KC_QUOTE), KC_7     , KC_8    , KC_9     , S(KC_8)  ,                                         _______  , KC_DEL  , KC_UP  , KC_BACKSPACE  ,S(____MINUS)  , _______  ,
+    _______  ,S(KC_QUOTE), KC_7     , KC_8    , KC_9     , S(KC_8)  ,                                         _______  , KC_DEL  , KC_UP  , KC_BACKSPACE  ,_______  , _______  ,
     _______  ,S(KC_SEMICOLON), KC_4     , KC_5    , KC_6     , KC_RIGHT_BRACKET  ,                                         _______  , KC_LEFT , KC_DOWN, KC_RIGHT , _______  , _______  ,
     _______  ,S(KC_MINUS), KC_1     , KC_2    , KC_3     ,S(KC_RIGHT_BRACKET),                                        KC_F2,KC_ENTER, KC_SPACE   ,KC_ESCAPE,_______,_______,
                   KC_0     , KC_DOT  , _______  ,         _______  , _______  ,                   _______   , _______  , _______       , _______  , _______
