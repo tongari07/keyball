@@ -39,13 +39,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [2] = LAYOUT_universal(
     _______  ,S(KC_QUOTE), KC_7     , KC_8    , KC_9     , S(KC_8)  ,                                         _______  , KC_DEL  , KC_UP  , KC_BACKSPACE  ,_______  , _______  ,
-    _______  ,S(KC_SEMICOLON), KC_4     , KC_5    , KC_6     , KC_RIGHT_BRACKET  ,                                         KC_F12  , KC_LEFT , KC_DOWN, KC_RIGHT , _______  , _______  ,
+    _______  ,S(KC_SEMICOLON), KC_4     , KC_5    , KC_6     , KC_RIGHT_BRACKET  ,                                         KC_F12  , KC_LEFT , KC_DOWN, KC_RIGHT , _______  , RGB_TOG  ,
     _______  ,S(KC_MINUS), KC_1     , KC_2    , KC_3     ,S(KC_RIGHT_BRACKET),                                        KC_F2,KC_ENTER, KC_SPACE   ,KC_ESCAPE,_______,_______,
                   KC_0     , KC_DOT  , _______  ,         _______  , _______  ,                   _______   , _______  , _______       , _______  , _______
   ),
 
   [3] = LAYOUT_universal(
-    _______  , _______   , _______  , _______  , _______  , _______  ,                                        _______  , _______  , _______ , _______ , _______ , RGB_TOG  ,
+    _______  , _______   , _______  , _______  , _______  , _______  ,                                        _______  , _______  , _______ , _______ , _______ , _______  ,
+    _______  , _______  , _______  , _______  , _______  , _______ ,                                        _______  , _______  , _______  , _______ , _______  , _______  ,
+    _______ , _______  , _______  , _______  , _______  , _______ ,                                        _______  , _______ , _______ , _______  , _______  , _______ ,
+                  _______  , _______  , _______  ,        _______  , _______  ,                   _______  , _______  , _______       , _______  , _______
+  ),
+
+  [4] = LAYOUT_universal(
+    _______  , _______   , _______  , _______  , _______  , _______  ,                                        _______  , _______  , _______ , _______ , _______ , _______  ,
     _______  , _______  , _______  , _______  , _______  , _______ ,                                        _______  , KC_MS_BTN1  , KC_MS_BTN2  , _______ , _______  , _______  ,
     _______ , _______  , _______  , _______  , _______  , _______ ,                                        _______  , KC_MS_BTN4 , KC_MS_BTN5 , _______  , _______  , _______ ,
                   _______  , _______  , _______  ,        _______  , _______  ,                   _______  , _______  , _______       , _______  , _______
@@ -62,8 +69,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-    // Auto enable scroll mode when the highest layer is not mouse layer
-    keyball_set_scroll_mode(get_highest_layer(state) != 3);
+      switch(get_highest_layer(remove_auto_mouse_layer(state, true))) {
+        case 3:
+            // Auto enable scroll mode when the highest layer is 3
+            // remove_auto_mouse_target must be called to adjust state *before* setting enable
+            state = remove_auto_mouse_layer(state, false);
+            set_auto_mouse_enable(false);
+            keyball_set_scroll_mode(true);
+            break;
+        default:
+            set_auto_mouse_enable(true);
+            keyball_set_scroll_mode(false);
+            break;
+    }
     return state;
 }
 
