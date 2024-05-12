@@ -35,9 +35,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define TAP_CODE_DELAY 5
 
-#define POINTING_DEVICE_AUTO_MOUSE_ENABLE
-#define AUTO_MOUSE_DEFAULT_LAYER 3
-// Time layer remains active after activation
-#define AUTO_MOUSE_TIME 450
-
-#define TRACKBALL_SCROLL_DIVIDER 30
+#define KEYBALL_SCROLL_DIV_DEFAULT 30
