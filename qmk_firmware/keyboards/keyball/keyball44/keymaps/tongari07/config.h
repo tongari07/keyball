@@ -41,3 +41,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define AUTO_MOUSE_TIME 450
 
 #define TRACKBALL_SCROLL_DIVIDER 30
+
+#define TAPPING_TERM 100
