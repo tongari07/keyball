@@ -26,7 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 enum custom_keycodes {
-  KC_MY_BTN1 = KAYBALL_SAFE_RANGE,
+  KC_MY_BTN1 = KEYBALL_SAFE_RANGE,
   KC_MY_BTN2,
   KC_MY_BTN3,
 };
@@ -126,11 +126,11 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
         break;
 
       case WAITING:
-        mouse_movement += my_abs(current_x) + my_abs(current_y);
+        mouse_movement += abs16(current_x) + abs16(current_y);
 
         if (mouse_movement >= to_clickable_movement) {
           mouse_movement = 0;
-          enable_click_layer();
+          enable_mouse_layer();
         }
         break;
 
@@ -146,7 +146,7 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
 
       case CLICKABLE:
         if (timer_elapsed(click_timer) > to_reset_time) {
-          disable_click_layer();
+          disable_mouse_layer();
         }
         break;
 
