@@ -72,7 +72,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
       switch(get_highest_layer(remove_auto_mouse_layer(state, true))) {
         case 2:
             // Finish auto mouse layer when the highest layer is 2
-            auto_mouse_layer_off();
+            state = remove_auto_mouse_layer(state, false);
             break;
         case 3:
             // Auto enable scroll mode when the highest layer is 3
