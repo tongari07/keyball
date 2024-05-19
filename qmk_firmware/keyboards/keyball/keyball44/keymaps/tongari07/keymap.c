@@ -70,6 +70,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 layer_state_t layer_state_set_user(layer_state_t state) {
       switch(get_highest_layer(remove_auto_mouse_layer(state, true))) {
+        case 2:
+            // Finish auto mouse layer when the highest layer is 2
+            auto_mouse_layer_off()
+            break;
         case 3:
             // Auto enable scroll mode when the highest layer is 3
             // remove_auto_mouse_target must be called to adjust state *before* setting enable
