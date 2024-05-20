@@ -99,3 +99,24 @@ void oledkit_render_info_user(void) {
     keyball_oled_render_layerinfo();
 }
 #endif
+
+// Adjust mouse speed gradually
+static void adjust_mouse_speed (keyball_motion_t *m) {
+  int16_t movement_size = abs(m->x) + abs(m->y);
+
+  float speed_multipler = 1.0;
+  if (movement_size > 60) {
+    speed_multipler = 3.0;
+  } else if (movement_size > 30) {
+    speed_multipler = 1.5;
+  } else if (movement_size > 5) {
+    speed_multipler = 1.0;
+  } else if (movement_size > 4) {
+    speed_multipler = 0.9;
+  } else if (movement_size > 3) {
+    speed_multipler = 0.7;
+  }
+
+  m->x = clip2int8((int16_t)(m->x * speed_multipler));
+  m->y = clip2int8((int16_t)(m->y * speed_multipler));
+}
