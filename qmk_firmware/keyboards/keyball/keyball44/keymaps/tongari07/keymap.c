@@ -20,14 +20,56 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "quantum.h"
 
+bool macos_check(void) {
+  wait_ms(1600);
+  bool mac_mode = true;
+  tap_code(KC_NLCK);
+  wait_ms(100);
+  if (host_keyboard_leds() & (1 << USB_LED_NUM_LOCK)) {
+    mac_mode = false;
+  }
+  tap_code(KC_NLCK);
+  wait_ms(100);
+  if (host_keyboard_leds() & (1 << USB_LED_NUM_LOCK)) {
+    mac_mode = false;
+  }
+  return mac_mode;
+}
+
+enum custom_keycodes {
+  CTRL_OR_WIN = SAFE_RANGE,
+  GUI_OR_CTRL
+};
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (keycode == CTRL_OR_WIN && record->event.pressed) {
+      if (macos_check()) {
+        register_code(KC_LCTL);
+        tap_code(KC_TAB);
+      } else {
+        register_code(KC_LGUI);
+        tap_code(KC_TAB);
+      }
+    }
+
+    if (keycode == GUI_OR_CTRL && record->event.pressed) {
+      if (macos_check()) {
+        register_code(KC_LEFT_GUI);
+      } else {
+        register_code(KC_LCTL);
+      }
+    }
+    return true;
+}
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // keymap for default
   [0] = LAYOUT_universal(
-    LCTL_T(KC_TAB)   , KC_Q     , KC_W     , KC_E     , KC_R     , KC_T     ,                                        KC_Y     , KC_U     , KC_I     , KC_O     , KC_MINUS     , S(KC_MINUS)   ,
+    CTRL_OR_WIN   , KC_Q     , KC_W     , KC_E     , KC_R     , KC_T     ,                                        KC_Y     , KC_U     , KC_I     , KC_O     , KC_MINUS     , S(KC_MINUS)   ,
     KC_LSFT   , KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,                                        KC_H     , KC_J     , KC_K     , KC_L     , KC_P  ,  KC_EQUAL ,
     KC_LALT  , KC_Z     , KC_X     , KC_C     , KC_V     , KC_B     ,                                        KC_B     , KC_N     , KC_M,KC_COMM  , KC_DOT   , S(KC_EQUAL) ,
-              KC_NO,KC_NO,LT(1, KC_SPC)     ,KC_LEFT_GUI,LT(3,KC_LNG2),                  KC_LNG1,MO(2), KC_NO,     KC_NO  , MO(3)
+              KC_NO,KC_NO,LT(1, KC_SPC)     ,GUI_OR_CTRL,LT(3,KC_LNG2),                  KC_LNG1,MO(2), KC_NO,     KC_NO  , MO(3)
   ),
 
   [1] = LAYOUT_universal(
