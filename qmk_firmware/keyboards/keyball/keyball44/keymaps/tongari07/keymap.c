@@ -27,12 +27,12 @@ enum custom_keycodes {
 
 enum layer_number {
   _MAC_LAYER = 0,
-  _WIN_LAYER,
-  _GAME_LAYER,
-  _SYMBOL_LAYER,
-  _OS_LAYER,
-  _NUM_LAYER,
-  _MOUSE_LAYER,
+  _WIN_LAYER = 1,
+  _GAME_LAYER = 2,
+  _SYMBOL_LAYER = 3,
+  _OS_LAYER = 4,
+  _NUM_LAYER = 5,
+  _MOUSE_LAYER = 6,
 };
 
 // clang-format off
