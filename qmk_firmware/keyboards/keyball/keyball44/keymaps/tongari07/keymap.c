@@ -20,21 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "quantum.h"
 
-bool macos_check(void) {
-  wait_ms(1600);
-  bool mac_mode = true;
-  tap_code(KC_NLCK);
-  wait_ms(100);
-  if (host_keyboard_leds() & (1 << USB_LED_NUM_LOCK)) {
-    mac_mode = false;
-  }
-  tap_code(KC_NLCK);
-  wait_ms(100);
-  if (host_keyboard_leds() & (1 << USB_LED_NUM_LOCK)) {
-    mac_mode = false;
-  }
-  return mac_mode;
-}
+#include "os_detection.h"
 
 enum custom_keycodes {
   CTRL_OR_WIN = SAFE_RANGE,
@@ -42,24 +28,27 @@ enum custom_keycodes {
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (keycode == CTRL_OR_WIN && record->event.pressed) {
-      if (macos_check()) {
-        register_code(KC_LCTL);
-        tap_code(KC_TAB);
-      } else {
+  wait_ms(400);
+  switch (detected_host_os()) {
+    case OS_WINDOWS:
+      if (keycode == CTRL_OR_WIN && record->event.pressed) {
         register_code(KC_LGUI);
         tap_code(KC_TAB);
       }
-    }
-
-    if (keycode == GUI_OR_CTRL && record->event.pressed) {
-      if (macos_check()) {
-        register_code(KC_LEFT_GUI);
-      } else {
+      if (keycode == GUI_OR_CTRL && record->event.pressed) {
         register_code(KC_LCTL);
       }
-    }
-    return true;
+      break;
+    default:
+      if (keycode == CTRL_OR_WIN && record->event.pressed) {
+        register_code(KC_LCTL);
+        tap_code(KC_TAB);
+      }
+      if (keycode == GUI_OR_CTRL && record->event.pressed) {
+        register_code(KC_LEFT_GUI);
+      }
+  }
+  return true;
 }
 
 // clang-format off

@@ -54,3 +54,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define KEYBALL_CPI_DEFAULT 400
 // Scroll speed
 #define KEYBALL_SCROLL_DIV_DEFAULT 5
+
+#define OS_DETECTION_DEBUG_ENABLE
